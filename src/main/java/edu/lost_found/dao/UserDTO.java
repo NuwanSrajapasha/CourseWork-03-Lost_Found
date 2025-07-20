@@ -1,0 +1,19 @@
+package edu.lost_found.dao;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class UserDTO implements Serializable {
+    private String userID;
+    private String userName;
+    private String userEmail;
+    private String userPassword;
+    private String userPhone;
+    private String userRole;
+}
