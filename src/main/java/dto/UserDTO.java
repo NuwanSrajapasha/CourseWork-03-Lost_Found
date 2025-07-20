@@ -1,4 +1,4 @@
-package edu.lost_found.dao;
+package dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

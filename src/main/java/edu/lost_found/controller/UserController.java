@@ -1,6 +1,6 @@
 package edu.lost_found.controller;
 
-import edu.lost_found.dao.UserDTO;
+import dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +19,10 @@ public class UserController {
         System.out.println(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
+    }
+    @PostMapping(value ="/login",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void Loginuser(){
+        String token
     }
 
 }
