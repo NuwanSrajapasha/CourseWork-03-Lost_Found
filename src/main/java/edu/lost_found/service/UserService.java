@@ -1,6 +1,6 @@
 package edu.lost_found.service;
 
-import dto.UserDTO;
+import edu.lost_found.dto.UserDTO;
 
 
 public interface UserService {
