@@ -3,18 +3,15 @@ package edu.lost_found.service.serviceIMPL;
 import edu.lost_found.dto.UserDTO;
 import edu.lost_found.entity.User;
 import edu.lost_found.dao.UserDAO;
-import edu.lost_found.config.AppConfig;
-import edu.lost_found.service.UserService;
+import edu.lost_found.service.AuthService;
 import edu.lost_found.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class UserServiceIMPL implements UserService {
+public class AuthServiceIMPL implements AuthService {
 
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
@@ -42,23 +39,5 @@ public class UserServiceIMPL implements UserService {
         return jwtUtil.generateToken(user.getUserName(), user.getRole());
     }
 
-    @Override
-    public void deleteUser(UserDTO userDTO) {
 
-    }
-
-    @Override
-    public void updateUser(UserDTO userDTO) {
-
-    }
-
-    @Override
-    public void getSelectedUser(UserDTO userDTO) {
-
-    }
-
-    @Override
-    public List<UserDTO> getAllUsers(UserDTO userDTO) {
-        return List.of();
-    }
 }
