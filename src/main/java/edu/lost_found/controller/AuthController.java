@@ -11,13 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/api/v1/auths")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+
+    private final AuthService authService;
+
 
     @GetMapping("health")
     public String healthCheck() {

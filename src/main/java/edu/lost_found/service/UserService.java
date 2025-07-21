@@ -7,6 +7,6 @@ import java.util.List;
 public interface UserService {
     void deleteUser(UserDTO userDTO);
     void updateUser(UserDTO userDTO);
-    void getSelectedUser(UserDTO userDTO);
-    List<UserDTO> getAllUsers(UserDTO userDTO);
+    UserDTO getSelectedUser(String userDTO);
+    List<UserDTO> getAllUsers();
 }

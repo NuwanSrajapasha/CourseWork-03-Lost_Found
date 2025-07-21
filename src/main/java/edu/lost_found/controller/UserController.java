@@ -1,11 +1,9 @@
 package edu.lost_found.controller;
 
 import edu.lost_found.dto.UserDTO;
-import edu.lost_found.service.AuthService;
 import edu.lost_found.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +25,9 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestParam("userIDkey") String userID) {
-        System.out.println(userID);
+    public ResponseEntity<Void> deleteUser(@RequestParam("userIDkey") UserDTO userID) {
+        userService.deleteUser(userID);
+        System.out.println();
         return ResponseEntity.noContent().build();
     }
     @PatchMapping(value = "/{userID}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,14 +38,11 @@ public class UserController {
     }
     @GetMapping("/{userID}")
     public ResponseEntity<UserDTO> getSelectedUser(@PathVariable String userID){
-        System.out.println("get Selected user"+userID);
-        return ResponseEntity.ok(new UserDTO(
-        ));
-
+        return ResponseEntity.ok(userService.getSelectedUser(userID));
     }
     @GetMapping
     public ResponseEntity<List<UserDTO>>getAllUsers() {
         List<UserDTO> userDTOList =new ArrayList<>();
-        return ResponseEntity.ok(userDTOList);
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }

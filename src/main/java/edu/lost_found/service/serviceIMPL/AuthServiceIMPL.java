@@ -18,6 +18,7 @@ public class AuthServiceIMPL implements AuthService {
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder password;
 
     @Override
     public void register(UserRegisterDTO userRegisterDTO) {
@@ -35,14 +36,17 @@ public class AuthServiceIMPL implements AuthService {
 
     @Override
     public String login(LoginRequestDTO loginRequestDTO) {
-        User user = userDAO.findByUserName(username)
+        User user = userDAO.findByUserName(loginRequestDTO.getUsernameOrEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+
+
+        if (passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
+            return jwtUtil.generateToken(user.getUserName(), user.getRole());
         }
 
-        return jwtUtil.generateToken(user.getUserName(), user.getRole());
+        throw new RuntimeException("Invalid credentials");
+
     }
 
 
