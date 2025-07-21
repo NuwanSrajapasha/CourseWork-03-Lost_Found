@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceIMPL implements UserService {
@@ -38,5 +40,25 @@ public class UserServiceIMPL implements UserService {
         }
 
         return jwtUtil.generateToken(user.getUserName(), user.getRole());
+    }
+
+    @Override
+    public void deleteUser(UserDTO userDTO) {
+
+    }
+
+    @Override
+    public void updateUser(UserDTO userDTO) {
+
+    }
+
+    @Override
+    public void getSelectedUser(UserDTO userDTO) {
+
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers(UserDTO userDTO) {
+        return List.of();
     }
 }
