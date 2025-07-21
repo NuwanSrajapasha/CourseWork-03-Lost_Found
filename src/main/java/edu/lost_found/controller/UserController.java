@@ -4,6 +4,7 @@ import edu.lost_found.dto.UserDTO;
 import edu.lost_found.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,24 +17,28 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("health")
     public String healthCheck() {
         return "OK......!!!!!!!";
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+       userService.addUser(userDTO);
+       return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @DeleteMapping
-    public ResponseEntity<Void> deleteUser(@RequestParam("userIDkey") UserDTO userID) {
+    public ResponseEntity<Void> deleteUser(@RequestParam("userID") String userID) {
         userService.deleteUser(userID);
-        System.out.println();
         return ResponseEntity.noContent().build();
     }
     @PatchMapping(value = "/{userID}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateUser(@PathVariable String userID,@RequestBody UserDTO userDTO) {
         System.out.println(userID);
-        userService.updateUser(userDTO);
+        userService.updateUser(userID,userDTO);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/{userID}")

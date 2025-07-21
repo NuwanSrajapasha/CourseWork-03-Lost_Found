@@ -5,7 +5,6 @@ import edu.lost_found.dto.LoginRequestDTO;
 import edu.lost_found.dto.UserRegisterDTO;
 import edu.lost_found.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class AuthController {
 
     @GetMapping("health")
     public String healthCheck() {
-        return "Aluth health check completed.....!!!";
+        return "Auth health check completed.....!!!";
     }
 
     @PostMapping(value = "register",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

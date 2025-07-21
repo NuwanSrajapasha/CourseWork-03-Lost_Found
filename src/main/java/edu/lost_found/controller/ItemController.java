@@ -22,15 +22,16 @@ public class ItemController {
     public String healthCheck() {
         return "Item health Check OK......!!!!!!!";
     }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addItem(ItemDTO itemDTO){
+    public ResponseEntity<Void> addItem(@RequestBody ItemDTO itemDTO){
         itemService.addItem(itemDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam("ItemIDkey") String userID) {
+    public ResponseEntity<Void> deleteItem(@RequestParam("ItemID") String userID) {
         itemService.deleteItem(userID);
         return ResponseEntity.noContent().build();
     }

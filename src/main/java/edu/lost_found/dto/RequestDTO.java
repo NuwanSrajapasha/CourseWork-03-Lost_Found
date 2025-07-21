@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class RequestDTO implements Serializable {
+    private String  userID;
     private String requestID;
     private String requestDescription;
     private String requestType;
