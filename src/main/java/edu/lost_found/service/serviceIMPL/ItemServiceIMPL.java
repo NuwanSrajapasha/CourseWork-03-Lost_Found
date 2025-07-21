@@ -2,6 +2,7 @@ package edu.lost_found.service.serviceIMPL;
 
 import edu.lost_found.dto.ItemDTO;
 import edu.lost_found.service.ItemService;
+import edu.lost_found.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +12,9 @@ public class ItemServiceIMPL implements ItemService {
 
 
     @Override
-    public void addItem(ItemDTO item) {
-
+    public void addItem(ItemDTO itemDTO) {
+        itemDTO.setItemID(UtilData.generateItemID());
+        System.out.println(itemDTO);
     }
 
     @Override

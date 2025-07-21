@@ -22,8 +22,10 @@ public class RequestController {
     public String healthCheck() {
         return "request health Check OK......!!!!!!!";
     }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addRequest(@RequestBody RequestDTO requestDTO){
+        requestService.addRequest(requestDTO);
         System.out.println(requestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
 

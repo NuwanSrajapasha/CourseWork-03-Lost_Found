@@ -5,14 +5,14 @@ import java.util.UUID;
 public class UtilData {
 
     public static String generateUserID(){
-        return "U-"+ UUID.randomUUID();
+        return "U/"+ UUID.randomUUID();
     }
 
     public static String generateItemID(){
-        return "I-"+ UUID.randomUUID();
+        return "I/"+ UUID.randomUUID();
     }
 
     public static String generateRequestID(){
-        return "R-"+ UUID.randomUUID();
+        return "R/"+ UUID.randomUUID();
     }
 }

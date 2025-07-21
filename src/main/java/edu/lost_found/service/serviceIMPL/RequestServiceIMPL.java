@@ -2,6 +2,7 @@ package edu.lost_found.service.serviceIMPL;
 
 import edu.lost_found.dto.RequestDTO;
 import edu.lost_found.dto.RequestStatus;
+import edu.lost_found.util.UtilData;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 public class RequestServiceIMPL implements edu.lost_found.service.RequestService {
     @Override
     public void addRequest(RequestDTO requestDTO) {
-
+        requestDTO.setRequestID(UtilData.generateRequestID());
+        System.out.println(requestDTO);
     }
 
     @Override
