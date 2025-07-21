@@ -22,5 +22,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column
+    private String phone;
+
     private String role; // e.g. ROLE_USER, ROLE_ADMIN
 }

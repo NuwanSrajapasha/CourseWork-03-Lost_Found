@@ -1,6 +1,8 @@
 package edu.lost_found.service.serviceIMPL;
 
-import edu.lost_found.dto.UserDTO;
+
+import edu.lost_found.dto.LoginRequestDTO;
+import edu.lost_found.dto.UserRegisterDTO;
 import edu.lost_found.entity.User;
 import edu.lost_found.dao.UserDAO;
 import edu.lost_found.service.AuthService;
@@ -18,17 +20,21 @@ public class AuthServiceIMPL implements AuthService {
     private final JwtUtil jwtUtil;
 
     @Override
-    public void register(UserDTO userDTO) {
+    public void register(UserRegisterDTO userRegisterDTO) {
         User user = new User();
-        user.setUserName(userDTO.getUserName());
-        user.setEmail(userDTO.getUserEmail());
+        user.setUserName(userRegisterDTO.getUserName());
+        user.setEmail(userRegisterDTO.getUserEmail());
+        user.setPhone(userRegisterDTO.getUserPhone());
+        user.setPassword(passwordEncoder.encode(userRegisterDTO.getUserPassword()));
         user.setRole("USER_ROLE");
-        user.setPassword(passwordEncoder.encode(userDTO.getUserPassword()));
         userDAO.save(user);
+        System.out.println("registered user form service layer"+userRegisterDTO);
+
     }
 
+
     @Override
-    public String login(String username, String password) {
+    public String login(LoginRequestDTO loginRequestDTO) {
         User user = userDAO.findByUserName(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 

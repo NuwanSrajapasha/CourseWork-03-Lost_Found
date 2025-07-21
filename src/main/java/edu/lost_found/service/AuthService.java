@@ -1,11 +1,13 @@
 package edu.lost_found.service;
 
-import edu.lost_found.dto.UserDTO;
 
+import edu.lost_found.dto.LoginRequestDTO;
+import edu.lost_found.dto.UserRegisterDTO;
 
 public interface AuthService {
-    void register(UserDTO userDTO);
-    String login(String username, String password);
+    void register(UserRegisterDTO userRegisterDTO);
+
+    String login(LoginRequestDTO loginRequestDTO);
 
 
 }

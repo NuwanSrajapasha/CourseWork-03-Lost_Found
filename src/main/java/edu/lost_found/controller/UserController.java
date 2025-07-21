@@ -2,7 +2,9 @@ package edu.lost_found.controller;
 
 import edu.lost_found.dto.UserDTO;
 import edu.lost_found.service.AuthService;
+import edu.lost_found.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,8 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    private final AuthService authService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("health")
     public String healthCheck() {
@@ -31,7 +34,7 @@ public class UserController {
     @PatchMapping(value = "/{userID}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateUser(@PathVariable String userID,@RequestBody UserDTO userDTO) {
         System.out.println(userID);
-        System.out.println(userDTO);
+        userService.updateUser(userDTO);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/{userID}")
