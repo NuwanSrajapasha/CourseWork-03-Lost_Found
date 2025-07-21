@@ -46,14 +46,15 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/{userID}")
-    public ResponseEntity<UserDTO> getSelectedBook(@PathVariable String userID){
+    public ResponseEntity<UserDTO> getSelectedUser(@PathVariable String userID){
         System.out.println("get Selected user"+userID);
         return ResponseEntity.ok(new UserDTO(
         ));
 
     }
+    @GetMapping
     public ResponseEntity<List<UserDTO >>getAllUsers() {
-        List<UserDTO> bookDTOList=new ArrayList<>();
-        return ResponseEntity.ok(bookDTOList);
+        List<UserDTO> userDTOList=new ArrayList<>();
+        return ResponseEntity.ok(userDTOList);
     }
 }
