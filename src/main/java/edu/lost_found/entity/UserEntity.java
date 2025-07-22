@@ -14,14 +14,13 @@ import java.util.List;
 public class UserEntity {
     @Id
     private String userID;
-
     private String userName;
     private String password;
     private String email;
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private Role role; // ROLE_USER, ROLE_ADMIN, STAFF
+    private Role role; //ADMIN,STAFF,USER
 
     @OneToMany(mappedBy = "reportedBy", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemEntity> itemEntities;

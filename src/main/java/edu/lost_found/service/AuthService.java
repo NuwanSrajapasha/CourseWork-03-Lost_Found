@@ -6,7 +6,6 @@ import edu.lost_found.dto.UserRegisterDTO;
 
 public interface AuthService {
     void register(UserRegisterDTO userRegisterDTO);
-
     String login(LoginRequestDTO loginRequestDTO);
 
 

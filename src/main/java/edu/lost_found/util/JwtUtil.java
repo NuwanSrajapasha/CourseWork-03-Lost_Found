@@ -1,6 +1,7 @@
 package edu.lost_found.util;
 
 import edu.lost_found.dto.Role;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -22,10 +23,17 @@ public class JwtUtil {
     public String generateToken(String username, Role role) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("Role", role)
+                .claim("Role", role.name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+    public Claims validateToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody(); // Will throw exception if invalid
     }
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +17,8 @@ public class RequestDTO implements Serializable {
     private String claimantUserID;
     private String requestDescription;
     private String requestType;
-    private String requestDate;
-    private String requestTime;
+    private LocalDate requestDate;
+    private Time requestTime;
     private RequestStatus requestStatus;
 
 }

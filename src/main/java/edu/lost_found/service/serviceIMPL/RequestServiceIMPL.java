@@ -12,6 +12,7 @@ import edu.lost_found.util.UtilData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -45,8 +46,8 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
         request.setRequestID(UUID.randomUUID().toString());
         request.setRequestDescription(requestDTO.getRequestDescription());
         request.setRequestType(requestDTO.getRequestType());
-        request.setRequestDate(LocalDate.now().toString());
-        request.setRequestTime(LocalTime.now().toString());
+        request.setRequestDate(LocalDate.parse(LocalDate.now().toString()));
+        request.setRequestTime(Time.valueOf(LocalTime.now().toString()));
         request.setRequestStatus(RequestStatus.PENDING);
         request.setItem(item); // ✅ link to item
 
@@ -85,8 +86,8 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
     @Override
     public void addRequest(RequestDTO requestDTO) {
         requestDTO.setRequestID(UtilData.generateRequestID());
-        requestDTO.setRequestDate(String.valueOf(UtilData.generateDate()));
-        requestDTO.setRequestTime(String.valueOf(UtilData.generateCurrentTime()));
+        requestDTO.setRequestDate(LocalDate.parse(String.valueOf(UtilData.generateDate())));
+        requestDTO.setRequestTime(Time.valueOf(String.valueOf(UtilData.generateCurrentTime())));
         System.out.println(requestDTO);
     }
     // ✅ Helper: Entity → DTO
@@ -116,16 +117,7 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
 
     @Override
     public RequestDTO getRequestByID(String requestID) {
-        RequestDTO request = new RequestDTO();
-        request.setItemID(request.getItemID());
-        request.setRequestID("R0001");
-        request.setRequestDescription("Request to claim the lost wallet");
-        request.setRequestType("CLAIM");
-        request.setRequestDate("2025-07-19");
-        request.setRequestTime("14:30");
-        request.setRequestStatus(RequestStatus.valueOf(String.valueOf(RequestStatus.valueOf("PENDING"))));
-
-        return request;
+        return null;
     }
 
     @Override

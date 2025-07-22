@@ -8,6 +8,8 @@ import edu.lost_found.dto.itemStatus;
 import edu.lost_found.entity.ItemEntity;
 import edu.lost_found.entity.UserEntity;
 import edu.lost_found.service.ItemService;
+import edu.lost_found.util.EntityDTOConvert;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,26 @@ public class ItemServiceIMPL implements ItemService {
 
     private final ItemDAO itemDAO;
     private final UserDAO userDAO;
+    private final EntityDTOConvert entityDTOConvert;
+
+    @Override
+    public ItemEntity reportLostItem(String userID,ItemDTO itemDTO) {
+        //Find reporting user
+        UserEntity user=userDAO.findById(userID)
+                .orElseThrow(() -> new RuntimeException("User Not Found"));
+
+        //Create Lost item
+        ItemEntity item = new ItemEntity();
+        item.setItemID(UUID.randomUUID().toString());
+        item.setLostDate(LocalDate.now());
+        item.setLostTime(Time.valueOf(LocalTime.now()));
+        item.setItemStatus(edu.lost_found.dto.itemStatus.LOST);
+        item.setReportedBy(user);
+
+        var itemEntity = entityDTOConvert.convertItemDTOToItemEntity(itemDTO);
+        return itemDAO.save(itemEntity);
+
+    }
 
     @Override
     public ItemEntity markItemClaimed(String itemId) {
@@ -39,23 +61,7 @@ public class ItemServiceIMPL implements ItemService {
         return itemDAO.save(item);
     }
 
-    @Override
-    public ItemEntity reportLostItem(String userID,ItemDTO itemDTO) {
-        //Find reporting user
-        UserEntity user=userDAO.findById(userID)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
 
-        //Create Lost item
-        ItemEntity item = new ItemEntity();
-        item.setItemID(UUID.randomUUID().toString());
-        item.setLostDate(LocalDate.now());
-        item.setLostTime(Time.valueOf(LocalTime.now()));
-        item.setItemStatus(edu.lost_found.dto.itemStatus.LOST);
-        item.setReportedBy(user);
-
-        return itemDAO.save(item);
-
-    }
 
 
     @Override

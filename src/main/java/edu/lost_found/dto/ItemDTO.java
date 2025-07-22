@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,9 +16,10 @@ public class ItemDTO implements Serializable {
     private String itemID;
     private String itemName;
     private String itemDescription;
-    private String lostDate;
-    private String lostTime;
+    private LocalDate lostDate;
+    private Time lostTime;
     private String lostLocation;
     private itemStatus itemStatus;
+
 
 }

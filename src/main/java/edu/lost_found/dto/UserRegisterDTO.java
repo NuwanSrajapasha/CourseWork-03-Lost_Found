@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserRegisterDTO {
+public class UserRegisterDTO implements Serializable {
+    private String userID;
     private String userName;
     private String userEmail;
     private String userPassword;
     private String userPhone;
+    private Role userRole;
 }

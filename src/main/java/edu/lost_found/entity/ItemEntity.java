@@ -17,7 +17,7 @@ import java.util.List;
 public class ItemEntity {
     @Id
     private String itemID;
-
+    private String requestID;
     private String itemName;
     private String itemDescription;
     private LocalDate lostDate;
