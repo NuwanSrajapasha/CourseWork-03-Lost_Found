@@ -19,32 +19,43 @@ public class ItemController {
     private final ItemService itemService;
 
 
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Item Controller is loaded!";
+    }
+
     @PostMapping("/lost")
-    public ResponseEntity<ItemDTO> reportLostItem(@RequestBody String userID, ItemDTO itemDTO){
-        itemService.reportLostItem(userID, itemDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
+    public ResponseEntity<ItemDTO> reportLostItem(
+            @RequestParam String userID,         // user who reported
+            @RequestBody ItemDTO itemDTO         // item details
+    ) {
+        ItemDTO saved = itemService.reportLostItem(userID, itemDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam("ItemID") String userID) {
-        itemService.deleteItem(userID);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{itemID}")
+    public ResponseEntity<Void> deleteItem(@PathVariable String itemID) {
+        itemService.deleteItem(itemID);
+        return ResponseEntity.noContent().build(); // HTTP 204
     }
-    @PatchMapping(value = "/{itemID}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateItemStatus(@PathVariable String itemID,@RequestBody ItemDTO itemDTO) {
+    @PatchMapping(
+            value = "/{itemID}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<ItemDTO> updateItemStatus(
+            @PathVariable String itemID,
+            @RequestBody ItemDTO itemDTO
+    ) {
         itemService.updateItem(itemID, itemDTO);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(itemService.getItemById(itemID)); // return updated DTO
     }
     @GetMapping("/{itemID}")
-    public ResponseEntity<ItemDTO> getSelectedItem(@PathVariable String itemID){
-        System.out.println("get Selected item"+itemID);
-        return new ResponseEntity<>(itemService.getItemById(itemID), HttpStatus.OK);
-
-
+    public ResponseEntity<ItemDTO> getSelectedItem(@PathVariable String itemID) {
+        return ResponseEntity.ok(itemService.getItemById(itemID));
     }
     @GetMapping("/lost")
     public ResponseEntity<List<ItemEntity>> getLostItems() {
         return ResponseEntity.ok(itemService.getAllLostItems());
-    }
+    }   
 }

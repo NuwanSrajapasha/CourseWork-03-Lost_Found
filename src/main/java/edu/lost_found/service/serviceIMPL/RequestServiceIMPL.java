@@ -29,11 +29,11 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
     @Override
     public RequestDTO submitClaimRequest(RequestDTO requestDTO) {
         // ✅ Find the claimant user
-        UserEntity claimant = userDAO.findById(requestDTO.getClaimantUserID())
+        UserEntity claimant = userDAO.findById(requestDTO.getUserID())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // ✅ Find the item being claimed
-        ItemEntity item = itemDAO.findById(requestDTO.getItemID())
+        ItemEntity item = itemDAO.findById(requestDTO.getItem())
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
         // ✅ Only FOUND items can be claimed
@@ -105,20 +105,10 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
     }
 
 
-    @Override
-    public void updateRequest(String id, RequestDTO requestDTO) {
 
-    }
 
-    @Override
-    public void deleteRequest(String requestID) {
 
-    }
 
-    @Override
-    public RequestDTO getRequestByID(String requestID) {
-        return null;
-    }
 
     @Override
     public List<RequestDTO> getAllRequest() {

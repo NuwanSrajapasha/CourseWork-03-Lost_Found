@@ -3,13 +3,10 @@ package edu.lost_found.service.serviceIMPL;
 import edu.lost_found.dao.ItemDAO;
 import edu.lost_found.dao.UserDAO;
 import edu.lost_found.dto.ItemDTO;
-import edu.lost_found.dto.UserDTO;
 import edu.lost_found.dto.itemStatus;
 import edu.lost_found.entity.ItemEntity;
-import edu.lost_found.entity.UserEntity;
 import edu.lost_found.service.ItemService;
 import edu.lost_found.util.EntityDTOConvert;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,57 +25,81 @@ public class ItemServiceIMPL implements ItemService {
     private final EntityDTOConvert entityDTOConvert;
 
     @Override
-    public ItemEntity reportLostItem(String userID,ItemDTO itemDTO) {
-        //Find reporting user
-        UserEntity user=userDAO.findById(userID)
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+    public ItemDTO reportLostItem(String userID, ItemDTO itemDTO) {
+        // ✅ Convert DTO → Entity
+        ItemEntity itemEntity = entityDTOConvert.convertItemDTOToItemEntity(itemDTO);
 
-        //Create Lost item
-        ItemEntity item = new ItemEntity();
-        item.setItemID(UUID.randomUUID().toString());
-        item.setLostDate(LocalDate.now());
-        item.setLostTime(Time.valueOf(LocalTime.now()));
-        item.setItemStatus(edu.lost_found.dto.itemStatus.LOST);
-        item.setReportedBy(user);
+        // ✅ Set LOST metadata
+        itemEntity.setItemID(UUID.randomUUID().toString());
+        itemEntity.setRequestID(UUID.randomUUID().toString());
+        itemEntity.setLostDate(LocalDate.now());
+        itemEntity.setLostTime(Time.valueOf(LocalTime.now()));
+        itemEntity.setItemStatus(itemStatus.LOST);
 
-        var itemEntity = entityDTOConvert.convertItemDTOToItemEntity(itemDTO);
-        return itemDAO.save(itemEntity);
+        // ✅ Save LOST item
+        ItemEntity saved = itemDAO.save(itemEntity);
 
+        // ✅ Convert Entity → DTO for response
+        return entityDTOConvert.convertItemEntityToItemDTO(saved);
     }
 
     @Override
-    public ItemEntity markItemClaimed(String itemId) {
-        //Fetch item
+    public ItemDTO markItemFound(String itemId) {
+        // ✅ Fetch item
         ItemEntity item = itemDAO.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
-        // Only FOUND → CLAIMED allowed
-        if (item.getItemStatus() != edu.lost_found.dto.itemStatus.FOUND) {
+        // ✅ Only LOST → FOUND allowed
+        if (item.getItemStatus() != itemStatus.LOST) {
+            throw new RuntimeException("Only LOST items can be marked FOUND");
+        }
+
+        item.setItemStatus(itemStatus.FOUND);
+
+        // ✅ Save updated
+        ItemEntity saved = itemDAO.save(item);
+
+        // ✅ Convert → DTO
+        return entityDTOConvert.convertItemEntityToItemDTO(saved);
+    }
+
+    @Override
+    public ItemDTO markItemClaimed(String itemId) {
+        // ✅ Fetch item
+        ItemEntity item = itemDAO.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        // ✅ Only FOUND → CLAIMED allowed
+        if (item.getItemStatus() != itemStatus.FOUND) {
             throw new RuntimeException("Only FOUND items can be marked CLAIMED");
         }
 
-        item.setItemStatus(edu.lost_found.dto.itemStatus.CLAIMED);
-        return itemDAO.save(item);
+        item.setItemStatus(itemStatus.CLAIMED);
+
+        // ✅ Save updated
+        ItemEntity saved = itemDAO.save(item);
+
+        // ✅ Convert → DTO
+        return entityDTOConvert.convertItemEntityToItemDTO(saved);
+
     }
-
-
 
 
     @Override
     public void updateItem(String memberID, ItemDTO itemDetails) {
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     @Override
-    public void deleteItem(String memberID) {
-
+    public void deleteItem(String itemID) {
+        itemDAO.deleteById(itemID);
     }
 
     @Override
-    public ItemDTO getItemById(String memberID) {
-        return (new ItemDTO(
-
-        ));
+    public ItemDTO getItemById(String itemID) {
+        ItemEntity item = itemDAO.findById(itemID)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+        return entityDTOConvert.convertItemEntityToItemDTO(item);
     }
 
     @Override

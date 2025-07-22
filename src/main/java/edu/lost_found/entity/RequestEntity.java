@@ -19,12 +19,11 @@ public class RequestEntity {
     @Id
     private String requestID;
 
-    private String claimantUserID;
+    private String UserID;
     private String requestDescription;
     private String requestType;
     private LocalDate requestDate;
     private Time requestTime;
-
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
 
