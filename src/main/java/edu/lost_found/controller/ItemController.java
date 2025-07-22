@@ -1,6 +1,7 @@
 package edu.lost_found.controller;
 
 import edu.lost_found.dto.ItemDTO;
+import edu.lost_found.entity.ItemEntity;
 import edu.lost_found.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,9 +23,9 @@ public class ItemController {
         return "Item health Check OK......!!!!!!!";
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addItem(@RequestBody ItemDTO itemDTO){
-        itemService.addItem(itemDTO);
+    @PostMapping("/lost")
+    public ResponseEntity<ItemDTO> reportLostItem(@RequestBody String userID, ItemDTO itemDTO){
+        itemService.reportLostItem(userID, itemDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
@@ -47,9 +47,8 @@ public class ItemController {
 
 
     }
-    @GetMapping
-    public ResponseEntity<List<ItemDTO>>getAllItems() {
-        List<ItemDTO> itemDTOList=new ArrayList<>();
-        return ResponseEntity.ok(itemService.getAllItems());
+    @GetMapping("/lost")
+    public ResponseEntity<List<ItemEntity>> getLostItems() {
+        return ResponseEntity.ok(itemService.getAllLostItems());
     }
 }
