@@ -19,16 +19,13 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("health")
-    public String healthCheck() {
-        return "OK......!!!!!!!";
-    }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
        userService.addUser(userDTO);
        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(@RequestParam("userID") String userID) {

@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class RequestDTO implements Serializable {
     private String itemID;
     private String requestID;
+    private String claimantUserID;
     private String requestDescription;
     private String requestType;
     private String requestDate;

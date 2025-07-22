@@ -18,18 +18,25 @@ public class RequestController {
 
     private final RequestService requestService;
 
-    @GetMapping("health")
-    public String healthCheck() {
-        return "request health Check OK......!!!!!!!";
+
+    // User submits a claim
+    @PostMapping("/claim")
+    public ResponseEntity<RequestDTO> submitClaim(@RequestBody RequestDTO dto) {
+        return ResponseEntity.ok(requestService.submitClaimRequest(dto));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addRequest(@RequestBody RequestDTO requestDTO){
-        requestService.addRequest(requestDTO);
-        System.out.println(requestDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
+    // Staff approves claim
+    @PutMapping("/{requestId}/approve")
+    public ResponseEntity<RequestDTO> approve(@PathVariable String requestId) {
+        return ResponseEntity.ok(requestService.approveRequest(requestId));
     }
+
+    // Staff rejects claim
+    @PutMapping("/{requestId}/reject")
+    public ResponseEntity<RequestDTO> reject(@PathVariable String requestId) {
+        return ResponseEntity.ok(requestService.rejectRequest(requestId));
+    }
+
 
     @DeleteMapping
     public ResponseEntity<Void> deleteRequest(@RequestParam("RequestID") String requestID) {

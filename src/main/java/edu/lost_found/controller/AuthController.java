@@ -19,10 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
 
-    @GetMapping("health")
-    public String healthCheck() {
-        return "Auth health check completed.....!!!";
-    }
+
 
     @PostMapping(value = "register",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> userRegisterDTO(@RequestBody UserRegisterDTO userRegisterDTO) {

@@ -18,10 +18,6 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @GetMapping("health")
-    public String healthCheck() {
-        return "Item health Check OK......!!!!!!!";
-    }
 
     @PostMapping("/lost")
     public ResponseEntity<ItemDTO> reportLostItem(@RequestBody String userID, ItemDTO itemDTO){

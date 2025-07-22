@@ -16,6 +16,7 @@ public class RequestEntity {
     @Id
     private String requestID;
 
+    private String claimantUserID;
     private String requestDescription;
     private String requestType;
     private String requestDate;
