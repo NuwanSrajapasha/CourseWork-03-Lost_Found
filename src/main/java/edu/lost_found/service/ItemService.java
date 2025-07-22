@@ -5,8 +5,9 @@ import edu.lost_found.dto.ItemDTO;
 import java.util.List;
 
 public interface ItemService {
-    void reportLostItem(String userId, String itemName);
-    void updateItem(String memberID,ItemDTO itemDetails);
+
+    void addItem(ItemDTO itemDTO);
+    void updateItem(String memberID, ItemDTO itemDetails);
     void deleteItem(String memberID);
     ItemDTO getItemById(String memberID);
     List<ItemDTO> getAllItems();

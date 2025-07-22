@@ -36,7 +36,7 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
         request.setRequestType("CLAIM");
         request.setRequestDate("2025-07-19");
         request.setRequestTime("14:30");
-        request.setRequestStatus(String.valueOf(RequestStatus.valueOf("PENDING")));
+        request.setRequestStatus(RequestStatus.valueOf(String.valueOf(RequestStatus.valueOf("PENDING"))));
 
         return request;
     }
