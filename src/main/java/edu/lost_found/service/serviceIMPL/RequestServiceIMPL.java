@@ -30,7 +30,7 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
     @Override
     public RequestDTO getRequestByID(String requestID) {
         RequestDTO request = new RequestDTO();
-        request.setUserID("U0001");
+        request.setItemID(request.getItemID());
         request.setRequestID("R0001");
         request.setRequestDescription("Request to claim the lost wallet");
         request.setRequestType("CLAIM");

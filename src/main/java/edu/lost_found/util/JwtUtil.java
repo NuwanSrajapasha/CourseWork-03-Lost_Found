@@ -1,5 +1,6 @@
 package edu.lost_found.util;
 
+import edu.lost_found.dto.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -18,7 +19,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String username, String role) {
+    public String generateToken(String username, Role role) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("Role", role)

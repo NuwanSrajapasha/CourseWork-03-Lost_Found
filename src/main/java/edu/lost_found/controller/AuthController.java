@@ -28,7 +28,7 @@ public class AuthController {
     public ResponseEntity<String> userRegisterDTO(@RequestBody UserRegisterDTO userRegisterDTO) {
         System.out.println(userRegisterDTO);
         authService.register(userRegisterDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("UserEntity registered!");
 
     }
     @PostMapping(value = "login", consumes = MediaType.APPLICATION_JSON_VALUE)

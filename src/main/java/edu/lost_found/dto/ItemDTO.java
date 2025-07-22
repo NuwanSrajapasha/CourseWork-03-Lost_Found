@@ -10,8 +10,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class ItemDTO implements Serializable {
+    private String requestID;
     private String itemID;
-    private String userID;
     private String itemName;
     private String itemDescription;
     private String lostDate;
