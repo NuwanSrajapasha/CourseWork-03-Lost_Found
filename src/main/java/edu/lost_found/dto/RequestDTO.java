@@ -16,6 +16,6 @@ public class RequestDTO implements Serializable {
     private String requestType;
     private String requestDate;
     private String requestTime;
-    private String requestStatus;
+    private RequestStatus requestStatus;
 
 }

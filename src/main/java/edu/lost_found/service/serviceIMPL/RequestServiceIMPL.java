@@ -12,7 +12,7 @@ public class RequestServiceIMPL implements edu.lost_found.service.RequestService
     @Override
     public void addRequest(RequestDTO requestDTO) {
         requestDTO.setRequestID(UtilData.generateRequestID());
-        requestDTO.setRequestDate(UtilData.generateDate());
+        requestDTO.setRequestDate(String.valueOf(UtilData.generateDate()));
         requestDTO.setRequestTime(String.valueOf(UtilData.generateCurrentTime()));
         System.out.println(requestDTO);
     }

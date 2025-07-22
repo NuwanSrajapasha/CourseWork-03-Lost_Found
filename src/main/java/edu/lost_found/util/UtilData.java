@@ -21,7 +21,7 @@ public class UtilData {
     }
 
     //Generate current time and date
-    public static String generateDate(){
+    public static LocalDate generateDate(){
         return LocalDate.now();
     }
     public static Time generateCurrentTime(){
