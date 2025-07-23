@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
-
+@RequiredArgsConstructor
 @Service
 public class RequestServiceIMPL implements RequestService {
 
@@ -27,13 +27,6 @@ public class RequestServiceIMPL implements RequestService {
     private final ItemDAO itemDAO;
     private final UserDAO userDAO;
     private final EntityDTOConvert entityDTOConvert;
-
-    public RequestServiceIMPL(RequestDAO requestDAO, ItemDAO itemDAO, UserDAO userDAO, EntityDTOConvert entityDTOConvert) {
-        this.requestDAO = requestDAO;
-        this.itemDAO = itemDAO;
-        this.userDAO = userDAO;
-        this.entityDTOConvert = entityDTOConvert;
-    }
 
 
     @Override
@@ -62,9 +55,9 @@ public class RequestServiceIMPL implements RequestService {
         request.setRequestDate(LocalDate.parse(LocalDate.now().toString()));
         request.setRequestTime(Time.valueOf(LocalTime.now().toString()));
         request.setRequestStatus(RequestStatus.PENDING);
-        request.setItem(item); // ✅ link to item
+        request.setItem(item); //  link to item
 
-        // ✅ Save & return DTO
+        //  Save & return DTO
         RequestEntity saved = requestDAO.save(requestEntity);
 
         //  Convert Entity → DTO for response
