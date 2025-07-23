@@ -1,6 +1,7 @@
 package edu.lost_found.controller;
 
 import edu.lost_found.dto.ItemDTO;
+import edu.lost_found.dto.UserDTO;
 import edu.lost_found.entity.ItemEntity;
 import edu.lost_found.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +57,8 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItemById(itemID));
     }
     @GetMapping("/lost")
-    public ResponseEntity<List<ItemEntity>> getLostItems() {
-        return ResponseEntity.ok(itemService.getAllLostItems());
-    }   
+    public ResponseEntity<List<ItemDTO>> getAllLostItems() {
+        List<ItemDTO> lostItems = itemService.getAllLostItems();
+        return ResponseEntity.ok(lostItems);
+    }
 }

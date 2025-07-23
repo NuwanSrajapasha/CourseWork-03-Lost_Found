@@ -1,7 +1,6 @@
 package edu.lost_found.service.serviceIMPL;
 
 import edu.lost_found.dao.ItemDAO;
-import edu.lost_found.dao.UserDAO;
 import edu.lost_found.dto.ItemDTO;
 import edu.lost_found.dto.itemStatus;
 import edu.lost_found.entity.ItemEntity;
@@ -15,7 +14,6 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +32,7 @@ public class ItemServiceIMPL implements ItemService {
         itemEntity.setRequestID(UtilData.generateRequestID());
         itemEntity.setLostDate(LocalDate.now());
         itemEntity.setLostTime(Time.valueOf(LocalTime.now()));
+        itemEntity.setUserID(itemDTO.getUserID());
         itemEntity.setItemStatus(itemStatus.LOST);
 
         // Save LOST item
@@ -111,9 +110,10 @@ public class ItemServiceIMPL implements ItemService {
     }
 
     @Override
-    public List<ItemEntity> getAllLostItems() {
+    public List<ItemDTO> getAllLostItems() {
 
-        return itemDAO.findByItemStatus(itemStatus.LOST);
+        List<ItemEntity> requests = itemDAO.findAll();
+        return entityDTOConvert.toItemDTOList(requests);
     }
 
 

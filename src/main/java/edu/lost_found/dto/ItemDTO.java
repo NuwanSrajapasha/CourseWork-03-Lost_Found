@@ -20,6 +20,7 @@ public class ItemDTO implements Serializable {
     private Time lostTime;
     private String lostLocation;
     private itemStatus itemStatus;
+    private String userID;
 
 
 }

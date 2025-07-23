@@ -33,49 +33,74 @@ public class RequestServiceIMPL implements RequestService {
     public RequestDTO submitClaimRequest(RequestDTO requestDTO) {
 
         // Convert DTO → Entity
-        RequestEntity requestEntity = entityDTOConvert.convertRequestDTOToRequestEntity(requestDTO);
-        //  Find the claimant user
+        RequestEntity request = entityDTOConvert.convertRequestDTOToRequestEntity(requestDTO);
+
+        // Load user and item
         UserEntity claimant = userDAO.findById(requestDTO.getUserID())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        //  Find the item being claimed
         ItemEntity item = itemDAO.findById(requestDTO.getItemID())
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
-        //  Only FOUND items can be claimed
         if (item.getItemStatus() != edu.lost_found.dto.itemStatus.FOUND) {
             throw new RuntimeException("You can only claim FOUND items!");
         }
 
-        //  Create request entity
-        RequestEntity request = new RequestEntity();
+        // IMPORTANT: assign ID before saving
         request.setRequestID(UtilData.generateRequestID());
+        request.setUserID(claimant.getUserID());
         request.setRequestDescription(requestDTO.getRequestDescription());
         request.setRequestType(requestDTO.getRequestType());
-        request.setRequestDate(LocalDate.parse(LocalDate.now().toString()));
-        request.setRequestTime(Time.valueOf(LocalTime.now().toString()));
+        request.setRequestDate(UtilData.generateDate());
+        request.setRequestTime(UtilData.generateCurrentTime());
         request.setRequestStatus(RequestStatus.PENDING);
-        request.setItem(item); //  link to item
+        request.setItem(item);
 
-        //  Save & return DTO
-        RequestEntity saved = requestDAO.save(requestEntity);
+        // Save this same populated object
+        RequestEntity saved = requestDAO.save(request);
 
-        //  Convert Entity → DTO for response
         return entityDTOConvert.convertRequestEntityToRequestDTO(saved);
     }
 
     @Override
     public RequestDTO approveRequest(String requestId) {
-        return null;
+        // 1️Find request
+        RequestEntity request = requestDAO.findById(requestId)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        // 2Update status
+        request.setRequestStatus(RequestStatus.APPROVED);
+
+        // 3️(Optional) Mark item as claimed if needed
+        ItemEntity item = request.getItem();
+        if (item != null) {
+            item.setItemStatus(edu.lost_found.dto.itemStatus.CLAIMED);
+            itemDAO.save(item); // save item update
+        }
+
+        // Save updated request
+        RequestEntity saved = requestDAO.save(request);
+
+        return entityDTOConvert.convertRequestEntityToRequestDTO(saved);
     }
 
     @Override
     public RequestDTO rejectRequest(String requestId) {
-        return null;
+        // Find request
+        RequestEntity request = requestDAO.findById(requestId)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        //  Update status
+        request.setRequestStatus(RequestStatus.REJECTED);
+
+        //  Save updated request
+        RequestEntity saved = requestDAO.save(request);
+
+        return entityDTOConvert.convertRequestEntityToRequestDTO(saved);
     }
 
     @Override
     public List<RequestDTO> getAllRequest() {
-        return List.of();
+        List<RequestEntity> requests = requestDAO.findAll();
+        return entityDTOConvert.toRequestDTOList(requests);
     }
 }

@@ -30,7 +30,7 @@ public class ItemEntity {
     // Many items → one user
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id") // FK in items table
-    private UserEntity reportedBy;
+    private String userID;
 
     // One item → one request
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
