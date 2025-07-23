@@ -8,11 +8,11 @@ import java.util.List;
 public interface ItemService {
 
     ItemDTO reportLostItem(String userID, ItemDTO itemDTO);
-    ItemDTO markItemFound(String itemId);
+    ItemDTO markItemFound(String itemId,ItemDTO itemDTO);
     ItemDTO markItemClaimed(String itemId);
-    void updateItem(String memberID, ItemDTO itemDetails);
-    void deleteItem(String memberID);
-    ItemDTO getItemById(String memberID);
+    void updateItem(String itemID, ItemDTO itemDetails);
+    void deleteItem(String itemID);
+    ItemDTO getItemById(String itemID);
     List<ItemEntity> getAllLostItems();
 
 

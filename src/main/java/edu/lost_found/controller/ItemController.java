@@ -39,19 +39,19 @@ public class ItemController {
         return ResponseEntity.noContent().build(); // HTTP 204
     }
     @PatchMapping(
-            value = "/{itemID}",
+
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<ItemDTO> updateItemStatus(
-            @PathVariable String itemID,
+            @RequestParam String itemID,
             @RequestBody ItemDTO itemDTO
     ) {
-        itemService.updateItem(itemID, itemDTO);
+        itemService.updateItem(itemID,itemDTO);
         return ResponseEntity.ok(itemService.getItemById(itemID)); // return updated DTO
     }
-    @GetMapping("/{itemID}")
-    public ResponseEntity<ItemDTO> getSelectedItem(@PathVariable String itemID) {
+    @GetMapping
+    public ResponseEntity<ItemDTO> getSelectedID(@RequestParam String itemID) {
         return ResponseEntity.ok(itemService.getItemById(itemID));
     }
     @GetMapping("/lost")

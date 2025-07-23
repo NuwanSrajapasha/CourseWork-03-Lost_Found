@@ -20,7 +20,7 @@ public class AuthServiceIMPL implements AuthService {
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private final PasswordEncoder password;
+
 
     @Override
     public void register(UserRegisterDTO userRegisterDTO) {

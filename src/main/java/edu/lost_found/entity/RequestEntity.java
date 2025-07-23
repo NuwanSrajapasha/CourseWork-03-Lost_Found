@@ -31,4 +31,6 @@ public class RequestEntity {
     @OneToOne
     @JoinColumn(name = "item_id", unique = true)
     private ItemEntity item;
+
+
 }

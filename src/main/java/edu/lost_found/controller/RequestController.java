@@ -3,8 +3,6 @@ package edu.lost_found.controller;
 import edu.lost_found.dto.RequestDTO;
 import edu.lost_found.service.RequestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RequestController {
 
-    private final RequestService requestService;
+   private final RequestService requestService;
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Request Controller is loaded!";
+    }
+
 
 
     // User submits a claim
     @PostMapping("/claim")
-    public ResponseEntity<RequestDTO> submitClaim(@RequestBody RequestDTO dto) {
-        return ResponseEntity.ok(requestService.submitClaimRequest(dto));
+    public ResponseEntity<RequestDTO> submitClaim(@RequestBody RequestDTO requestDTO) {
+        return ResponseEntity.ok(requestService.submitClaimRequest(requestDTO));
     }
 
     // Staff approves claim
