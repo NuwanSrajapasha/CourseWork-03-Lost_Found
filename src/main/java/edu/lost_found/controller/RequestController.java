@@ -30,8 +30,8 @@ public class RequestController {
     }
 
     // Staff approves claim
-    @PutMapping("/{requestId}/approve")
-    public ResponseEntity<RequestDTO> approve(@PathVariable String requestId) {
+    @PutMapping("/approve")
+    public ResponseEntity<RequestDTO> approve(@RequestParam String requestId) {
         return ResponseEntity.ok(requestService.approveRequest(requestId));
     }
 
@@ -42,9 +42,8 @@ public class RequestController {
     }
 
 
-    @GetMapping
+    @GetMapping("getAllreq")
     public ResponseEntity<List<RequestDTO>>getAllRequests() {
-        List<RequestDTO> RequestDTOList=new ArrayList<>();
-        return ResponseEntity.ok(RequestDTOList);
+        return ResponseEntity.ok(requestService.getAllRequest());
     }
 }

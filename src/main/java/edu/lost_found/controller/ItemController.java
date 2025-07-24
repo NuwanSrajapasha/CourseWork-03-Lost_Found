@@ -35,13 +35,14 @@ public class ItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+
     @DeleteMapping("/{itemID}")
     public ResponseEntity<Void> deleteItem(@PathVariable String itemID) {
         itemService.deleteItem(itemID);
         return ResponseEntity.noContent().build(); // HTTP 204
     }
     @PatchMapping(
-
+            value = "/{itemID}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )

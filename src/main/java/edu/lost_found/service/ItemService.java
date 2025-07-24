@@ -7,7 +7,7 @@ import java.util.List;
 public interface ItemService {
 
     ItemDTO reportLostItem(String userID, ItemDTO itemDTO);
-    ItemDTO markItemFound(String itemId,ItemDTO itemDTO);
+    ItemDTO markItemFound(String itemId);
     ItemDTO markItemClaimed(String itemId);
     void updateItem(String itemID, ItemDTO itemDetails);
     void deleteItem(String itemID);

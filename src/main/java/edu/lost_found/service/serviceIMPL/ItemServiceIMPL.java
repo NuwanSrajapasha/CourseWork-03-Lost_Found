@@ -32,7 +32,7 @@ public class ItemServiceIMPL implements ItemService {
         itemEntity.setRequestID(UtilData.generateRequestID());
         itemEntity.setLostDate(LocalDate.now());
         itemEntity.setLostTime(Time.valueOf(LocalTime.now()));
-        itemEntity.setUserID(itemDTO.getUserID());
+        itemEntity.setUserID(itemDTO.getUser());
         itemEntity.setItemStatus(itemStatus.LOST);
 
         // Save LOST item

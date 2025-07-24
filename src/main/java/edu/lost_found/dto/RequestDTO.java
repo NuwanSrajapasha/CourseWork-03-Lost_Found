@@ -12,11 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 public class RequestDTO implements Serializable {
-    private String itemID;
+    private String LinkeditemID;
     private String requestID;
     private String UserID;
     private String requestDescription;
-    private String requestType;
     private LocalDate requestDate;
     private Time requestTime;
     private RequestStatus requestStatus;

@@ -22,6 +22,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Role role; //ADMIN,STAFF,USER
 
-    @OneToMany(mappedBy = "reportedBy", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemEntity> itemEntities;
+    // One user → many requests
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RequestEntity> requests;
 }

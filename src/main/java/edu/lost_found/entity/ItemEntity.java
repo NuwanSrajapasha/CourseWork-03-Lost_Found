@@ -27,10 +27,6 @@ public class ItemEntity {
     @Enumerated(EnumType.STRING)
     private edu.lost_found.dto.itemStatus itemStatus;
 
-    // Many items → one user
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id") // FK in items table
-    private String userID;
 
     // One item → one request
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)

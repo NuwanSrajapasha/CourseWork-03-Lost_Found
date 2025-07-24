@@ -20,13 +20,6 @@ public class UserController {
     private final UserService userService;
 
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
-       userService.addUser(userDTO);
-       return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(@RequestParam("userID") String userID) {
         userService.deleteUser(userID);
@@ -38,11 +31,11 @@ public class UserController {
         userService.updateUser(userID,userDTO);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/{userID}")
-    public ResponseEntity<UserDTO> getSelectedUser(@PathVariable String userID){
+    @GetMapping
+    public ResponseEntity<UserDTO> getSelectedUser(@RequestParam String userID){
         return ResponseEntity.ok(userService.getSelectedUser(userID));
     }
-    @GetMapping
+    @GetMapping("getAllUsers")
     public ResponseEntity<List<UserDTO>>getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }

@@ -21,16 +21,20 @@ public class RequestEntity {
 
     private String UserID;
     private String requestDescription;
-    private String requestType;
     private LocalDate requestDate;
     private Time requestTime;
+
     @Enumerated(EnumType.STRING)
     private RequestStatus requestStatus;
 
-    //One request → one item
-    @OneToOne
-    @JoinColumn(name = "item_id", unique = true)
-    private ItemEntity item;
+    // One request is linked to ONE user (but one user can have MANY requests)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid", referencedColumnName = "userID")
+    private UserEntity user;
 
+    //  One request refers to ONE item (one item is linked to ONE request)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id", referencedColumnName = "itemID")
+    private ItemEntity item;
 
 }
